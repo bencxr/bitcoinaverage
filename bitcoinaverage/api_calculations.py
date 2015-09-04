@@ -28,7 +28,7 @@ def get24hAverage(currency_code):
 
     try:
         with Timeout(API_CALL_TIMEOUT_THRESHOLD, CallTimeoutException):
-            csv_result = urllib2.urlopen(urllib2.Request(url=history_currency_API_24h_path, headers=API_REQUEST_HEADERS)).read()
+            csv_result = urllib2.urlopen(urllib2.Request(url=history_currency_API_24h_path)).read()
     except (
             KeyError,
             ValueError,
@@ -373,14 +373,14 @@ def writeAPIFiles(api_path, timestamp, calculated_average_rates_formatted, calcu
         all_data['timestamp'] = timestamp
         all_data['ignored_exchanges'] = exchanges_ignored
         for currency in CURRENCY_LIST:
-            if (currency in calculated_volumes_formatted
-            and currency in calculated_average_rates_formatted
-            and currency in calculated_global_average_rates_formatted):
-                cur_data = {'exchanges': calculated_volumes_formatted[currency],
-                            'averages': calculated_average_rates_formatted[currency],
-                            'global_averages': calculated_global_average_rates_formatted[currency],
-                            }
-                all_data[currency] = cur_data
+				cur_data = {}
+				if currency in calculated_volumes_formatted:
+					cur_data['exchanges'] = calculated_volumes_formatted[currency]
+				if currency in calculated_average_rates_formatted:
+					cur_data['averages'] = calculated_average_rates_formatted[currency]
+				if currency in calculated_global_average_rates_formatted:
+					cur_data['global_averages'] = calculated_global_average_rates_formatted[currency]
+				all_data[currency] = cur_data
 
         helpers.write_api_file(
             os.path.join(api_path, API_FILES['ALL_FILE']),

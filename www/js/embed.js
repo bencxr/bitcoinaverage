@@ -39,7 +39,7 @@ var ba_widget = function (html_id, currency) {
 	self._protocol = window.location.protocol;
 	self._wrapper_id = html_id;
 	self._currencyCode = currency;
-	self._apiHistoryIndexUrl = 'https://api.bitcoinaverage.com/history/';
+	self._apiHistoryIndexUrl = 'https://api.multisig.xyz/history/';
 	self._data24hURL = self._apiHistoryIndexUrl + self._currencyCode + '/per_minute_24h_sliding_window.csv';
 
 	self.init = function () {
@@ -103,13 +103,13 @@ var ba_widget = function (html_id, currency) {
 				-->&nbsp;<span class="ba-cur-code"></span>\
 			</div>\
 			<div class="ba-text">BitcoinAverage <a>price index</a></div>\
-			<div class="ba-logo"><a href="https://bitcoinaverage.com/"><img src="img/logo_chart.png" alt="bitcoinaverage.com"></a></div>\
+			<div class="ba-logo"><a href="https://multisig.xyz/"><img src="img/logo_chart.png" alt="multisig.xyz"></a></div>\
 		</div>';
 
 	self.createWidget = function () {
 		self._widget = $('#' + self._wrapper_id);
 		self._widget.html(self._template);
-		self._widget.find('.ba-text a').attr('href', 'https://bitcoinaverage.com/#' + self._currencyCode);
+		self._widget.find('.ba-text a').attr('href', 'https://multisig.xyz/#' + self._currencyCode);
 		var widget_total_height = self._widget.height();
 		var chart_height = widget_total_height - 56;  // computed manually
 		self._widget.find('.ba-chart').height(chart_height);

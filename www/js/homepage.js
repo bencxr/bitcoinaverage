@@ -20,6 +20,7 @@ var selectedFiatCurrency = false;
 var firstRenderDone = false;
 var apiDataUpdated = false;
 var fiatExchangeRates = [];
+var fiatCurrencies = {};
 var timeGap = 0; //actual time is fetched from server, and user's local time is adjusted by X seconds to be completely exact
 
 var callAPI = function(callback){
@@ -140,8 +141,6 @@ var renderMarketsData = function(apiData, currency){
         }
 
         var lastPrice = item['averages']['last'].toFixed(config.precision);
-        var crossPrice = (fiatCurrencies[currency]['rate'] / fiatCurrencies[currencyCode]['rate']) * lastPrice;
-        crossPrice = crossPrice.toFixed(config.precision);
         var cookieHideLink = $.cookie("global-average-table");
         var oneRow = $('<tr></tr>');
         if (i > config.majorCurrencies) {
@@ -207,7 +206,6 @@ var renderMarketsData = function(apiData, currency){
         var tdCrossPrice = $('<td></td>');
         var insLegendCurcode = $('<ins></ins>');
 
-        spanCrossPrice.text(crossPrice + ' ');
         insLegendCurcode.text(currency);
         insLegendCurcode.attr('class', 'legend-curcode');
         tdCrossPrice.attr('class', 'legend-last-cross-price text-right');
@@ -314,7 +312,7 @@ var renderLegend = function(currencyCode){
         $('#ignored_count').text(index);
     }
 
-    $('.legend-currency-code-update').html(fiatCurrencies[currencyCode]['name']);
+    // $('.legend-currency-code-update').html(fiatCurrencies[currencyCode]['name']);
 
     $('#legend-global-average').html(currencyData.global_averages.last.toFixed(config.precision))
     $('#legend-global-volume-percent').html(currencyData.global_averages.volume_percent.toFixed(2))

@@ -1,6 +1,9 @@
 /.idea/*
 /runtime/*.log
 *.pyc
+*.swp
+*.swap
+/logs
 
 /www/charts/*
 /www/currencies/*
